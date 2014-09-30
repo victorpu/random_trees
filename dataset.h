@@ -4,6 +4,14 @@
 #include <string>
 #include <vector>
 
+// For example:
+// if line == "ab,cd,e,12,xy", then
+// tokens will be ["ab", "cd", "e", "12", "xy"]
+void split(const std::string& line, std::vector<std::string>& tokens);
+
+double str2double(const std::string& str);
+int str2int(const std::string& str);
+
 class DataSet {
     public:
         // Empty constructor
@@ -14,14 +22,11 @@ class DataSet {
 		//   (2) the first column is y;
 		//   (3) there is no missing value;
 		//   (4) delimiter is always ','.
-        static DataSet* load_csv(const string& filename);
+        static DataSet* load_csv(const std::string& filename);
 		
-        // boostrap a DataSet(with replacement) from an existing DataSet, this
-		// dataset has the same size as the existing one.
+        // using boostrap (with replacement) to generate a DataSet from an 
+		// existing DataSet, this dataset has the same size as the existing one.
         static DataSet* boostraped_set(const DataSet& original_dataset);	
-		
-        // permute an attribute's instances (shuffle)
-        void permute(int attr);
 		
         // Get a particular instance's label
         int label(int i) const{
@@ -41,13 +46,11 @@ class DataSet {
           return attributes_[i][attr];
         }
 		
-		//useful when we want to write the boostrapped DataSet into a CSV file.
-        void write_csv(const string& output_filename);
-		
-    private:		
+		void print();
+    private:
 		// X, access is attributes_ [attribute] [instance]
-        vector< vector<double> > attributes_;
+        std::vector< std::vector<double> > attributes_;
         // List of true labels, access is labels_ [instance]
-        vector<int> labels_;
+        std::vector<int> labels_;
 };
 #endif
